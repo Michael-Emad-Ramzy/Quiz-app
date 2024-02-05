@@ -9,15 +9,19 @@ export default function Quiz() {
   const activeQuestionIndex = userAnswers.length;
   const quizIsComplete = activeQuestionIndex === QUESTIONS.length;
 
-  const handleSelectAnswer= useCallback(function handleSelectAnswer(selectedAnswer) {
+  const handleSelectAnswer = useCallback(function handleSelectAnswer(
+    selectedAnswer
+  ) {
     setUserAnswers((prevAnswer) => {
       return [...prevAnswer, selectedAnswer];
     });
-  },[])
+  },
+  []);
 
-  const handleSkipAnswer = useCallback(()=>{
-    ()=>handleSelectAnswer(null)
-  }, [handleSelectAnswer])
+  const handleSkipAnswer = useCallback(
+    () => handleSelectAnswer(null),
+    [handleSelectAnswer]
+  );
 
   if (quizIsComplete) {
     return (
@@ -35,7 +39,12 @@ export default function Quiz() {
   return (
     <div id="quiz">
       <div id="question">
-        <QuestionTimer timeout={10000} onTimeout={handleSkipAnswer} />
+        <QuestionTimer
+          timeout={10000}
+          onTimeout={handleSkipAnswer}
+          key={activeQuestionIndex}
+          //this key prop can unmount and remount the component whenever its value changed.
+        />
         <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
         <ul id="answers">
           {shuffledAnswers.map((answer) => (
