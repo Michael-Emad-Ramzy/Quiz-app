@@ -1,0 +1,28 @@
+import Answers from "./Answers.jsx";
+import QuestionTimer from "./QuestionTimer.jsx";
+
+export default function Question({
+  questionText,
+  answers,
+  onSelectAnswer,
+  selectedAnswer,
+  answerState,
+  onSkipAnswer,
+}) {
+  return (
+    <div id="question">
+      <QuestionTimer
+        //this key prop can unmount and remount the component whenever its value changed.
+        timeout={10000}
+        onTimeout={onSkipAnswer}
+      />
+      <h2>{questionText}</h2>
+      <Answers
+        answers={answers}
+        selectedAnswer={selectedAnswer}
+        answerState={answerState}
+        onSelect={onSelectAnswer}
+      />
+    </div>
+  );
+}
